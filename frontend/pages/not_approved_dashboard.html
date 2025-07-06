@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Not Approved</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        /* notapproved.css */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #F9F9F9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-content {
+    background-color: white;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    max-width: 700px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 1rem;
+}
+
+.main-content span#userName {
+    color: #0a7bbd;
+    font-weight: bold;
+}
+
+.main-content p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.main-content strong {
+    color: #1e5b85;
+}
+
+.main-content h3#info {
+    font-family: monospace;
+    background-color: #8dd9fc;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 2rem;
+    color: #003e5c;
+    word-break: break-word;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content" style="text-align: center; padding: 3rem;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Hello <span id="userName">[Name]</span>,</h1>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem;">
+                Your registration as <strong><span id="userRole">[role_name]</span></strong> still needs to be approved by an admin.
+            </p>
+            <p style="font-size: 1.1rem;">
+                Please contact the school administrator and give him the information provided below to complete the approval process.
+            </p>
+            <h3 id="info"></h3>
+            <button style="width: 100%; margin-top: 20px; padding: 17px;" class=" btn btn-danger" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+
+    <script src="../js/authGuard.js"></script>
+    <script>
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/';
+        return;
+    }
+
+    const authError = sessionStorage.getItem('authError');
+    if (authError) {
+        console.error(`[Redirect Reason] ${authError}`);
+        sessionStorage.removeItem('authError');
+    }
+
+    const response = await fetch('/api/notapproved', {
+        headers: {
+            'authorization': `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    if (data.role){     
+        if (data.role === 3) {
+            const err = sessionStorage.setItem('authError', data.message || 'Unauthorized access to another dashboard.');
+            window.location.href = '/student';
+            return;
+        }
+        if (data.role === 4 || data.role === 5) {
+            const err = sessionStorage.setItem('authError', data.message || 'Unauthorized access to another dashboard.');
+            window.location.href = '/notapproved';
+            return;
+        }
+        if (data.role === 2) {
+            sessionStorage.setItem('authError', data.message || 'Unauthorized access to another dashboard.');
+            window.location.href = '/teacher';
+            return;
+        }
+        if (data.role === 1) {
+            sessionStorage.setItem('authError', data.message || 'Unauthorized access to another dashboard.');
+            window.location.href = '/admin';
+            return;
+        }
+
+    }
+
+    const firstName = data.firstname;
+    const lastName = data.lastname;
+    const userId = data.user_id;
+    if (data.role_id === 4) {
+        roleName = 'Admin';
+    }else {
+        roleName = 'Teacher';
+    }
+
+    const info = `{${firstName}-${lastName}-${userId}-${data.role_id}}`
+
+    document.getElementById("userName").textContent = firstName;
+    document.getElementById("userRole").textContent = roleName;
+    document.getElementById('info').textContent = info;
+
+
+});
+
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+    }
+
+    </script>
+</body>
+</html>

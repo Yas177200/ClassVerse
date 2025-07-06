@@ -1,0 +1,248 @@
+/* Modal backdrop */
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Prevent background scrolling */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Modal window */
+.modal-content.add-course-modal {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 900px;
+  height: 95vh;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+  animation: slideFadeIn 0.45s ease;
+  overflow: hidden;
+}
+
+/* Modal title */
+.modal-title,
+.add-course-modal h2 {
+  text-align: center;
+  color: #044565;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+}
+
+/* Modal layout (left and right) */
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sections */
+.form-section,
+.course-summary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #334155;
+}
+
+/* Inputs */
+.form-control {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #2594cc;
+  box-shadow: 0 0 0 3px rgba(37, 148, 204, 0.1);
+  outline: none;
+}
+
+/* Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+/* Summary area */
+.course-summary {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #1f2937;
+}
+
+.course-summary h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+/* Scrollable table area */
+.table-container {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* Sticky headers (optional) */
+.table-container table thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+}
+
+/* Animation */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.modal-content.add-course-modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1000px;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: slideFadeIn 0.3s ease;
+  margin: auto;
+}
+
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.modal-left {
+  flex: 1 1 60%;
+  min-width: 300px;
+}
+
+.modal-right {
+  flex: 1 1 35%;
+  min-width: 250px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+
+.modal-content.add-course-modal {
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.modal-body {
+  flex: 1;                     /* fill all available vertical space */
+  display: flex;
+  gap: 2rem;
+  overflow: hidden;            /* prevent modal scrolling */
+}
+
+.modal-left, 
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                    /* each panel takes proportional width */
+  min-width: 250px;
+  max-height: 100%;
+  overflow: hidden;           /* important for internal scrolling */
+}
+
+/* Scrollable area for tables */
+.modal-left .form-group:nth-last-child(1),
+.modal-right table {
+  flex: 1 1 auto;             /* fill remaining vertical space */
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+}
+
+/* Fix header on scroll (optional) */
+.modal-left thead,
+.modal-right thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+
+.course-message {
+  display: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.course-message.success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.course-message.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+} 

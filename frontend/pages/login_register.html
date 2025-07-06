@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/aboutus.css">
+    <style>
+        .header {
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img id="logo" src="../img/irad-round.jpeg" alt="Irad Logo">
+            <img id="logo" src="../img/logo2.png" alt="ClassVerse Logo">
+            <div class="header-text">
+                <!-- <h1 id="logo-name">ClassVerse</h1> -->
+                <h3 id="logo-slogan">Where Innovation Meets Education – by Irad Academy</h3>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('loginTab')">Login</button>
+            <button class="nav-tab" onclick="showTab('signupTab')">Sign Up</button>
+        </div>
+        <div class="tab-content active" id="loginTab">
+            <form class="auth-form" id="loginForm">
+                <div class="form-group" >
+                    <label for="loginusername">Username</label>
+                    <input type="text" class="form-control" id="loginusername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginpassword">Password</label>
+                    <input type="password" class="form-control" id="loginpassword" required>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <div id="message" class="alert" style="border: none;"></div>
+            </form>
+        </div>
+        <div class="tab-content" id="signupTab">
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" id="firstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" class="form-control" id="birthday" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role_id">Account Type</label>
+                    <select class="form-control" id="role_id" required>
+                        <option value="">Select Account Type</option>
+                        <option value="3">Student</option>
+                        <option value="5">Teacher</option>
+                        <option value="4">Admin</option>
+                    </select>
+                </div>
+
+
+
+                <div class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+                <div id="message" class="alert" style="border: none;"></div>
+            </form>
+        </div>
+    </div>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h2>About Us</h2>
+      <p>
+        <strong>ClassVerse</strong> is the official digital learning platform of <strong>Irad Academy</strong>. We aim to bring students, teachers, and education into one intelligent, accessible system — where innovation meets education.
+      </p>
+    </div>
+
+    <div class="footer-section contact">
+      <h2>Contact Us</h2>
+      <p><strong>📍 Address:</strong> Muster Strasse 177, Musterstadt 00177</p>
+      <p><strong>🕒 Hours:</strong> Monday to Friday, 10:00–18:00</p>
+      <p><strong>📧 Email:</strong> contact@classverse.irad</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; <span id="year">2025</span> ClassVerse by Yasser Abdulmala Student at Irad Academy. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            const button = tabId === 'loginTab' ? document.querySelectorAll('.nav-tab')[0] : document.querySelectorAll('.nav-tab')[1];
+            button.classList.add('active');
+        }
+    </script>
+    <script src="../js/login.js"></script>
+    <script src="../js/signup.js"></script>
+
+
+
+</body>
+</html>

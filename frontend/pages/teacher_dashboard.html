@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img id="logo" src="../img/irad-round.jpeg" alt="Irad Logo">
+            <img id="logo" src="../img/logo2.png" alt="ClassVerse Logo">
+            <div class="header-text">
+                <h1 id="logo-name">ClassVerse</h1>
+                <h3 id="logo-slogan">Where Innovation Meets Education – by Irad Academy</h3>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="user-info-border">
+                    <h3 id="teacherDisplayName">Welcome!</h3>
+                    <p id="teacherRole">Teacher</p>
+                    </div>
+                </div>
+                
+                <div class="menu-item active" onclick="showTeacherSection('profile')">
+                    👤 My Profile
+                </div>
+                <div class="menu-item" onclick="showTeacherSection('students')">
+                    👥 My Students
+                </div>
+                <div class="menu-item" onclick="showTeacherSection('grades')">
+                    📊 Grade Management
+                </div>
+                <div class="menu-item" onclick="logout()">
+                    🚪 Logout
+                </div>
+                <img src="../img/Image20250522211355.png" alt="" width="250px" height="100px" style="margin-top: 50px;">
+            </div>
+            
+            <div class="main-content">
+<div id="teacherProfileSection" class="profile-card">
+    <h2>Profile Information</h2>
+    
+    <div class="profile-header">
+        <img id="profileImg" src="/img/default-avatar.png" alt="Profile Image" class="profile-img">
+        <input type="file" id="profileImageInput" accept="image/*" style="display:none;">
+        <div id="imgOverlay"></div>
+    </div>
+
+    <div class="profile-details">
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" id="firstname" readonly>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" id="lastname" readonly>
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" id="username" readonly>
+        </div>
+        <div class="form-group">
+            <label>Birthday</label>
+            <input type="date" class="form-control" id="birthday" readonly>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" id="email" readonly>
+        </div>
+        <div class="form-group text-center">
+            <button id="editProfileBtn" onclick="toggleEditProfile()" class="btn btn-primary">Edit Profile</button>
+            <button id="cancelEditBtn" onclick="cancelEditProfile()" class="btn btn-secondary" style="display: none;">Cancel</button>
+            <button id="resetpassbtn" class="btn btn-warning" onclick="openResetPasswordModal()">Change Password</button>
+        </div>
+    </div>
+</div>
+
+                
+                <div id="teacherStudentsSection" style="display: none;">
+                    <div style="display: flex; gap: 20px;">
+                        <h2>My Students</h2>
+                        <input type="text" class="form-control" placeholder="Search Students..." id="studentSearchInput">
+                    </div>
+                    <table class="table" id="teacherStudentsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherStudentsTableBody">
+                            <!-- Students will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="teacherGradesSection" style="display: none;">
+                    <div>
+                    <h2>Grade Management</h2>
+                        <button class="btn btn-primary" onclick="openTeacherAddGradeModal()">Add Grade</button>
+                        <button class="btn btn-primary" onclick="exporttoPDF()">Export PDF</button>
+                        <select class="btn" style="border: 1px solid black;" id="courseSelectforExport">
+                        </select>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Subject</th>
+                                <th>Grade</th>
+                                <th>Date</th>
+                                <th style="text-align: center; ">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherGradesTableBody">
+                            <!-- Grades will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Add Grade Modal -->
+<div id="addGradeModal" class="modal" style="display:none; justify-items: center; align-content: center;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('addGradeModal')">&times;</span>
+    <h3>Assign Grade</h3>
+
+    <label for="addGradeInput">Grade:</label>
+    <input id="addGradeInput" class="form-control" placeholder="Enter grade (e.g. C+)" />
+
+    <label for="addGradeCourseSelect">Course:</label>
+    <select id="addGradeCourseSelect" class="form-control">
+      <!-- Courses populated dynamically -->
+    </select>
+
+    <label for="addGradeStudentSelect">Student:</label>
+    <select id="addGradeStudentSelect" class="form-control">
+      <!-- Students populated dynamically -->
+    </select>
+
+    <div id="addGradeMessage" class="form-message"></div>
+
+    <div class="modal-buttons">
+      <button class="btn btn-primary" onclick="submitAddGrade()">Submit</button>
+      <button class="btn btn-secondary" onclick="closeModal('addGradeModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="confirmationPopup" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p id="confirmationMessage">Are you sure?</p>
+    <div style="text-align: right; margin-top: 1rem;">
+      <button id="confirmYes" class="btn btn-danger">Yes</button>
+      <button id="confirmNo" class="btn btn-secondary">No</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal for ressting password -->
+<div id="resetPasswordModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('resetPasswordModal')">&times;</span>
+    <h3>Reset Password</h3>
+
+    <label for="oldPassword">Old Password:</label>
+    <input type="password" id="oldPassword" class="form-control" placeholder="Enter old password">
+
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
+
+    <label for="confirmNewPassword">Confirm New Password:</label>
+    <input type="password" id="confirmNewPassword" class="form-control" placeholder="Confirm new password">
+
+    <div id="resetPasswordMessage" class="form-message"></div>
+
+    <div class="modal-buttons">
+      <button class="btn btn-primary" onclick="submitPasswordReset()">Submit</button>
+      <button class="btn btn-secondary" onclick="closeModal('resetPasswordModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/teacher.js"></script>
+<script src="../js/profileedit.js"></script>
+<script src="../js/authGuard.js"></script>
+<script src="../js/resetPassword.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+
+</body>
+</html>
